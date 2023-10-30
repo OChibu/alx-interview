@@ -1,0 +1,1 @@
+Welcome to the N-Queens Problem Solver module. This module is dedicated to solving the classic N-Queens problem using various algorithms and techniques. The N-Queens problem is a well-known puzzle that involves placing N chess queens on an N×N chessboard so that no two queens threaten each other.
