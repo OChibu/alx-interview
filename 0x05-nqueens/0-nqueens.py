@@ -1,60 +1,74 @@
 #!/usr/bin/python3
-
+"""
+File: 0-nqueens.py
+"""
 import sys
 
-def is_safe(board, row, col, N):
-    # Check if there is a queen in the same column
-    for i in range(row):
-        if board[i][col] == 1:
-            return False
 
-    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+def is_valid(board, row, col):
+    """Create methed of is_valid with 3 argument"""
+    # Check this row on left side
+    if 1 in board[row]:
+        return False
+
+    upper_diag = zip(range(row, -1, -1),
+                     range(col, -1, -1))
+    for i, j in upper_diag:
         if board[i][j] == 1:
             return False
 
-    for i, j in zip(range(row, -1, -1), range(col, N)):
+    lower_diag = zip(range(row, len(board), 1),
+                     range(col, -1, -1))
+    for i, j in lower_diag:
         if board[i][j] == 1:
             return False
 
     return True
 
-def solve_n_queens_util(board, row, N):
-    if row == N:
-        print_solution(board, N)
-        return
 
-    for i in range(N):
-        if is_safe(board, row, i, N):
-            board[row][i] = 1
-            solve_n_queens_util(board, row + 1, N)
-            board[row][i] = 0
+def nqueens_helper(board, col):
+    """Cheer methed"""
+    if col >= len(board):
+        print_board(board, len(board))
+    for i in range(len(board)):
+        if is_valid(board, i, col):
+            board[i][col] = 1
+            result = nqueens_helper(board, col + 1)
+            if result:
+                return True
+            board[i][col] = 0
+    return False
 
-def solve_n_queens(N):
-    board = [[0 for _ in range(N)] for _ in range(N)]
-    solve_n_queens_util(board, 0, N)
 
-def print_solution(board, N):
-    for i in range(N):
-        for j in range(N):
-            print(board[i][j], end=" ")
-        print()
+def print_board(board, n):
+    """Prints the position"""
+    b = []
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
+    for i in range(n):
+        for j in range(n):
+            if board[i][j] == 1:
+                b.append([i, j])
+    print(b)
 
-    try:
-        N = int(sys.argv[1])
-        if N < 4:
-            print("N must be at least 4")
-            sys.exit(1)
 
-        solve_n_queens(N)
+def nqueens(n):
+    """Intrance function for the puzzle"""
+    board = []
+    for i in range(n):
+        row = [0] * n
+        board.append(row)
+    nqueens_helper(board, 0)
 
-    except ValueError:
-        print("N must be a number")
-        sys.exit(1)
 
 if __name__ == "__main__":
-    mai
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        exit(1)
+    queens = sys.argv[1]
+    if not queens.isnumeric():
+        print("N must be a number")
+        exit(1)
+    elif int(queens) < 4:
+        print("N must be at least 4")
+        exit(1)
+    nqueens(int(queens))
