@@ -1,0 +1,1 @@
+Welcome to the Star Wars API Interaction module. This module is designed to provide a comprehensive guide on how to interact with the Star Wars API (SWAPI) using various programming languages. SWAPI is a RESTful web service that provides data about the Star Wars universe. This module aims to cover how to retrieve, process, and display information from SWAPI.
